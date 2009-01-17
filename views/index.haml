@@ -1,1 +1,8 @@
-%p Hello, chump!
+%a{:href => "/opml.xml"} OPML
+%h1 Listing Feeds
+%ul
+- @feeds.each do |f|
+  = haml :feed_in_list, :locals => { :f => f }
+
+%h2 Add a new Feed
+= haml :feed_form, :locals => { :f => Feed.new }

@@ -1,0 +1,8 @@
+!!!XML
+%opml{:version => 1.0}
+  %head
+    %title Entangled feeds
+  %body
+    - @feeds.each do |f|
+      %outline{:text => "Feed from #{f.url}", :title => f.url, :type => 'rss', :xmlUrl => "#{req_base}/#{f.id}.xml", :htmlUrl => "#{req_base}/#{f.id}"}
+

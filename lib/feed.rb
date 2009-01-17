@@ -23,6 +23,13 @@ class Feed
     @filename = opts[:filename]
   end
 
+  def update_attributes(opts = {})
+    @url = opts[:url]
+    @username = opts[:username]
+    @password = opts[:password]
+    @type = opts[:type] || :basic
+  end
+
   def id
     @filename.gsub(/\.yml/, '') if @filename
   end
@@ -44,6 +51,10 @@ class Feed
     File.open(Feed.file_path(@filename), 'w') do |f|
       f.write(self.to_yaml)
     end
+  end
+
+  def destroy
+    File.safe_unlink(Feed.file_path(@filename)) if @filename
   end
 
   def filename
@@ -77,7 +88,7 @@ class Feed
     t_url = @url
     uri = URI.parse(t_url)
     # TODO: fixme to use real basic auth
-    req = Net::HTTP::Get.new(uri.path)
+    req = Net::HTTP::Get.new(uri.path + (uri.query ? "?#{uri.query}" : ''))
     req.basic_auth @username, @password
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if uri.scheme == "https"

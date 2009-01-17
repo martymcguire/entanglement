@@ -1,0 +1,13 @@
+%form{:method => :post}
+  - if defined?(form_method)
+    %input{:type => :hidden, :name => '_method', :value => form_method}
+  %p
+    URL:
+    %input{:type => :text, :name => 'feed[url]', :value => f.url}
+  %p
+    Username:
+    %input{:type => :text, :name => 'feed[username]', :value => f.username}
+  %p
+    Password:
+    %input{:type => :password, :name => 'feed[password]', :value => f.password}
+  %input{:type => :submit, :value => 'Submit'}

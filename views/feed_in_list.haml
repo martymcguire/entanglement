@@ -1,0 +1,9 @@
+%li
+  = f.url
+  %a{:href => repub_url(f)}
+    [View]
+  %a{:href => edit_url(f)}
+    [Edit]
+  %form{:method => :post, :action => edit_url(f), :class => 'delete'}
+    %input{:type => :hidden, :name => :_method, :value => :delete}
+    %input{:type => :submit, :value => "Delete"}
