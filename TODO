@@ -2,8 +2,15 @@
 * Refactor Feed internals so that IDs are top level
 * Allow for hashing methods other than SHA1
 * Allow for other kinds of auth
-* DRY up feed downloads
+* Feed downloads
+  * DRY up the code
+  * Set a User-Agent when fetching feeds
 * Specs!!!!
 * Options to minimalize feed item output (e.g. just a title & link)
 * Options to cache in DB or whatnot
 * Add feed titles, etc. to management iface.
+* Custom 404, 500 pages
+* Config file
+  * Move salt out of lib/feed.rb
+  * Auth methods
+  * Etc.
