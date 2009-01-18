@@ -1,0 +1,9 @@
+* Add note about Thin since Sinatra wants it now
+* Refactor Feed internals so that IDs are top level
+* Allow for hashing methods other than SHA1
+* Allow for other kinds of auth
+* DRY up feed downloads
+* Specs!!!!
+* Options to minimalize feed item output (e.g. just a title & link)
+* Options to cache in DB or whatnot
+* Add feed titles, etc. to management iface.

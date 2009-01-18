@@ -36,8 +36,11 @@ Deployment
 Required Gems:
 
 * [Sinatra](http://github.com/bmizerany/sinatra/tree/master)
+  * Tested with version 0.9.0.2, also requires [Thin](http://github.com/macournoyer/thin/tree/master)
 * [Nokogiri](http://github.com/tenderlove/nokogiri/tree/master)
+  * Tested w/ 1.1.1
 * [HTAuth](http://github.com/copiousfreetime/htauth/tree/master)
+  * Tested w/ 1.0.3
 
 Deployment Steps
 
