@@ -7,7 +7,7 @@ require 'net/https'
 class Feed
   @@feeds_path = 'data'
   @@cache_path = 'cache'
-  @@salt = 'pr372l5_4ND_hUmMu5'
+  @@salt = '0Mg 1t\'5 p0pcrn! Fuck Yeah!'
   @@expire_time = 30 # minutes
 
   attr_accessor :url

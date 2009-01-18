@@ -1,6 +1,6 @@
 %h1= "Listing #{@feeds.size} Feed#{(@feeds.size == 1) ? '' : 's'}"
-%a.opt{:href => "/opml.xml"} 
-  %img{:src => "/images/opml-icon-16x16.png"}
+%a.opt{:href => "opml.xml"} 
+  %img{:src => "images/opml-icon-16x16.png"}
   Export OPML
 %ul#feed_list
   - @feeds.each do |f|

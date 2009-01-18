@@ -6,11 +6,11 @@ require 'nokogiri'
 
 helpers do
   def repub_url(feed)
-    "/#{feed.id}.xml"
+    "#{feed.id}.xml"
   end
 
   def edit_url(feed)
-    "/#{feed.id}"
+    "#{feed.id}"
   end
 
   def req_base
@@ -35,16 +35,15 @@ post "/" do
   require_administrative_privileges
   @feed = Feed.new(params[:feed])
   @feed.save
-  redirect "/"
+  redirect "."
 end
 
 # OPMLz
 get "/opml.xml" do
   @feeds = Feed.all
-  send_data((haml :opml, :layout => false), 
-             :filename => "entangled_feeds.xml",
-             :type => 'application/xml',
-             :disposition => 'attachment')
+  attachment 'entangled_feeds.xml'
+  content_type 'application/xml'
+  haml :opml, :layout => false
 end
 
 post "/opml" do
@@ -60,7 +59,7 @@ post "/opml" do
                :type => t).save
     end
   end
-  redirect '/'
+  redirect '.'
 end
 
 # Edit view
@@ -82,7 +81,7 @@ put "/:feed_id" do
   end
   @feed.update_attributes(params[:feed])
   @feed.save
-  redirect "/#{@feed.id}"
+  redirect "#{@feed.id}"
 end
   
 delete "/:feed_id" do
@@ -92,7 +91,7 @@ delete "/:feed_id" do
     throw :halt, [404, 'Not Found']
   end
   @feed.destroy
-  redirect "/"
+  redirect "."
 end
 
 get "/:feed_id.xml" do
