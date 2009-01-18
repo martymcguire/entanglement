@@ -35,6 +35,7 @@ class Feed
   end
 
   def self.find(id)
+    return nil if !File.exists?(file_path("#{id}.yml"))
     YAML.load_file(file_path("#{id}.yml"))
   end
 

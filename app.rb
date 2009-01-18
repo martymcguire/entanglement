@@ -80,12 +80,19 @@ end
 get "/:feed_id" do
   require_administrative_privileges
   @feed = Feed.find(params[:feed_id])
-  haml :edit
+  if @feed.nil? 
+    throw :halt, [404, 'Not Found']
+  else
+    haml :edit
+  end
 end
 
 put "/:feed_id" do
   require_administrative_privileges
   @feed = Feed.find(params[:feed_id])
+  if @feed.nil? 
+    throw :halt, [404, 'Not Found']
+  end
   @feed.update_attributes(params[:feed])
   @feed.save
   redirect "/#{@feed.id}"
@@ -94,13 +101,20 @@ end
 delete "/:feed_id" do
   require_administrative_privileges
   @feed = Feed.find(params[:feed_id])
+  if @feed.nil? 
+    throw :halt, [404, 'Not Found']
+  end
   @feed.destroy
   redirect "/"
 end
 
 get "/:feed_id.xml" do
+  @feed = Feed.find(params[:feed_id])
+  if @feed.nil? 
+    throw :halt, [404, 'Not Found']
+  end
   content_type 'application/xml', :charset => 'utf-8'
-  Feed.find(params[:feed_id]).content
+  @feed.content
 end
 
 get "/:feed_id" do
