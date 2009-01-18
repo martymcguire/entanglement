@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'lib/feed'
 require 'lib/authorization'
+require 'nokogiri'
 
 helpers do
   def repub_url(feed)
@@ -57,8 +58,22 @@ end
 # OPMLz
 get "/opml.xml" do
   @feeds = Feed.all
-  content_type 'application/xml', :charset => 'utf-8'
-  haml :opml, :layout => false
+  send_data((haml :opml, :layout => false), 
+             :filename => "entangled_feeds.xml",
+             :type => 'application/xml',
+             :disposition => 'attachment')
+end
+
+post "/opml" do
+  u = params[:username]
+  p = params[:password]
+  doc = Nokogiri::XML(params[:opml][:tempfile])
+  doc.xpath('//outline').each do |entry|
+    if entry['xmlUrl']
+      Feed.new(:username => u, :password => p, :url => entry['xmlUrl']).save
+    end
+  end
+  redirect '/'
 end
 
 # Edit view

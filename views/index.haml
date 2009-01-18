@@ -1,10 +1,22 @@
-%h1 Listing Feeds
+%h1= "Listing #{@feeds.size} Feed#{(@feeds.size == 1) ? '' : 's'}"
 %a.opt{:href => "/opml.xml"} Export OPML
-%a.opt{:href => "#", :onclick => 'alert("TODO");'} Import OPML
 %ul#feed_list
   - @feeds.each do |f|
     = haml :feed_in_list, :locals => { :f => f }, :layout => false
 
 %hr/
+%h2 Import an OPML File
+.hint Upload OPML Files whose feeds all use the same username/password!
+%form.feed_form{:action => '/opml', :method => :post, :enctype => 'multipart/form-data'}
+  %p
+    .label Username:
+    %input{:type => :text, :name => :username}
+  %p
+    .label Password:
+    %input{:type => :password, :name => :password}
+  %p
+    .label File to upload:
+    %input{:type => :file, :name => :opml, :size => 58}
+  %input{:type => :submit, :value => 'Upload!'}
 %h2 Add a new Feed
 = haml :feed_form, :locals => { :f => Feed.new }, :layout => false
