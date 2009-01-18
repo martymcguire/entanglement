@@ -6,8 +6,8 @@
     .label Password:
     %input{:type => :password, :name => :password}
   %p
-    .label{:name => 'feed[type]'} Type:
-    %select{:name => 'feed[type]'}
+    .label{:name => 'type'} Type:
+    %select{:name => 'type'}
       - [:basic, :trac].each do |t|
         %option{:value => t}= t.to_s.capitalize
   %p
