@@ -16,6 +16,10 @@ helpers do
     "#{request.scheme}://#{request.host}#{request.port == 80 ? '' : ':' + request.port.to_s}"
   end
 
+  def button(text, url, method = :get, _method = nil)
+    haml :feed_button, :layout => false, :locals => { :text => text, :url => url, :method => method, :_method => _method }
+  end
+
   include Sinatra::Authorization 
 end
 
@@ -93,3 +97,4 @@ get "/public/styles.css" do
   content_type 'text/css', :charset => 'utf-8'
   sass :styles
 end
+

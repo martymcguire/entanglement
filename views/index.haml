@@ -1,8 +1,10 @@
-%a{:href => "/opml.xml"} OPML
 %h1 Listing Feeds
-%ul
-- @feeds.each do |f|
-  = haml :feed_in_list, :locals => { :f => f }
+%a.opt{:href => "/opml.xml"} Export OPML
+%a.opt{:href => "#", :onclick => 'alert("TODO");'} Import OPML
+%ul#feed_list
+  - @feeds.each do |f|
+    = haml :feed_in_list, :locals => { :f => f }, :layout => false
 
+%hr/
 %h2 Add a new Feed
-= haml :feed_form, :locals => { :f => Feed.new }
+= haml :feed_form, :locals => { :f => Feed.new }, :layout => false

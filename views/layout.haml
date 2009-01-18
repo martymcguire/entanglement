@@ -2,4 +2,11 @@
   %head
     %link{:rel => 'stylesheet', :href => '/public/styles.css'}
   %body
-    = yield
+    #container
+      #logo
+        %img{:src => '/images/logo.png'}
+        .one Entanglement
+        .two Entanglement
+        .three Entanglement
+      #content
+        = yield

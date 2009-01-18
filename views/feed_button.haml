@@ -1,0 +1,4 @@
+%form{:method => method, :action => url, :class => 'feed_button'}
+  - if _method
+    %input{:type => :hidden, :name => :_method, :value => _method}
+  %input{:type => :submit, :value => text}

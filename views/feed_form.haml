@@ -1,13 +1,13 @@
-%form{:method => :post}
+%form#feed_form{:method => :post}
   - if defined?(form_method)
     %input{:type => :hidden, :name => '_method', :value => form_method}
   %p
-    URL:
+    .label{:name => 'feed[url]'} URL:
     %input{:type => :text, :name => 'feed[url]', :value => f.url}
   %p
-    Username:
+    .label{:name => 'feed[username]'} Username:
     %input{:type => :text, :name => 'feed[username]', :value => f.username}
   %p
-    Password:
+    .label{:name => 'feed[password]'} Password:
     %input{:type => :password, :name => 'feed[password]', :value => f.password}
-  %input{:type => :submit, :value => 'Submit'}
+  %input{:type => :submit, :value => (f.id.nil? ? 'Add' : 'Update') + ' this Feed'}
