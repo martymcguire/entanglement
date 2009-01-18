@@ -1,0 +1,17 @@
+%form.feed_form{:action => '/opml', :method => :post, :enctype => 'multipart/form-data'}
+  %p
+    .label Username:
+    %input{:type => :text, :name => :username}
+  %p
+    .label Password:
+    %input{:type => :password, :name => :password}
+  %p
+    .label{:name => 'feed[type]'} Type:
+    %select{:name => 'feed[type]'}
+      - [:basic, :trac].each do |t|
+        %option{:value => t}= t.to_s.capitalize
+  %p
+    .label File to upload:
+    %input{:type => :file, :name => :opml, :size => 58}
+  %input{:type => :submit, :value => 'Upload!'}
+

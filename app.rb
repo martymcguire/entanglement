@@ -67,10 +67,14 @@ end
 post "/opml" do
   u = params[:username]
   p = params[:password]
+  t = params[:type]
   doc = Nokogiri::XML(params[:opml][:tempfile])
   doc.xpath('//outline').each do |entry|
     if entry['xmlUrl']
-      Feed.new(:username => u, :password => p, :url => entry['xmlUrl']).save
+      Feed.new(:username => u, 
+               :password => p, 
+               :url => entry['xmlUrl'],
+               :type => t).save
     end
   end
   redirect '/'

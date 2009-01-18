@@ -10,4 +10,9 @@
   %p
     .label{:name => 'feed[password]'} Password:
     %input{:type => :password, :name => 'feed[password]', :value => f.password}
+  %p
+    .label{:name => 'feed[type]'} Type:
+    %select{:name => 'feed[type]'}
+      - [:basic, :trac].each do |t|
+        %option{:value => t}= t.to_s.capitalize
   %input{:type => :submit, :value => (f.id.nil? ? 'Add' : 'Update') + ' this Feed'}

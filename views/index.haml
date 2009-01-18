@@ -9,16 +9,6 @@
 %hr/
 %h2 Import an OPML File
 .hint Upload OPML Files whose feeds all use the same username/password!
-%form.feed_form{:action => '/opml', :method => :post, :enctype => 'multipart/form-data'}
-  %p
-    .label Username:
-    %input{:type => :text, :name => :username}
-  %p
-    .label Password:
-    %input{:type => :password, :name => :password}
-  %p
-    .label File to upload:
-    %input{:type => :file, :name => :opml, :size => 58}
-  %input{:type => :submit, :value => 'Upload!'}
+= haml :opml_form, :layout => false
 %h2 Add a new Feed
 = haml :feed_form, :locals => { :f => Feed.new }, :layout => false

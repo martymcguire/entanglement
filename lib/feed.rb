@@ -1,8 +1,8 @@
 require 'yaml'
 require 'digest/sha1'
 require 'ftools'
-require 'net/https'
 require 'uri'
+require 'net/https'
 
 class Feed
   @@feeds_path = 'data'
@@ -88,7 +88,6 @@ class Feed
   def fetch_basic
     t_url = @url
     uri = URI.parse(t_url)
-    # TODO: fixme to use real basic auth
     req = Net::HTTP::Get.new(uri.path + (uri.query ? "?#{uri.query}" : ''))
     req.basic_auth @username, @password
     http = Net::HTTP.new(uri.host, uri.port)
@@ -99,8 +98,48 @@ class Feed
     end
   end
 
+  def fetch_trac
+    login_url = @url.gsub(/\?.*$/, '')
+    login_url = (login_url[0,login_url.rindex('/') + 1] + 'login').to_s
+    uri = URI.parse(login_url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    cookie = nil
+    http.start do |http|
+      req = Net::HTTP::Get.new(uri.path)
+      req.basic_auth @username, @password
+      req['Cookie'] = cookie
+      res = http.request(req)
+      cookie = res['set-cookie'] || cookie
+      trac_auth = cookie_val(cookie, 'trac_auth')
+
+      uri = URI.parse(@url)
+      req = Net::HTTP::Get.new(uri.path + '?' + uri.query)
+      req.basic_auth @username, @password
+      req['Cookie'] = cookie
+      res = http.request(req)
+      File.open(cache_file, 'w') do |f|
+        f.write(res.body)
+      end
+    end
+  end
+
   def expired?
     return true if !File.exists?(cache_file)
     (Time.now - File.mtime(cache_file)) > @@expire_time * 60
+  end
+
+  def cookie_val(cookie, key) 
+    ret = nil
+    return nil if cookie.nil?
+    cookie.split(',').each do |token|
+      token.split(';').each do |c|
+        c.strip!
+        single = c.split('=')
+        if single.size==2 && single[0] == key
+          ret = single[1]
+        end
+      end
+    end
+    ret
   end
 end
