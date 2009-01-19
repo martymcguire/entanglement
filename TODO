@@ -11,6 +11,5 @@
 * Add feed titles, etc. to management iface.
 * Custom 404, 500 pages
 * Config file
-  * Move salt out of lib/feed.rb
   * Auth methods
   * Etc.

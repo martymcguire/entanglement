@@ -47,8 +47,8 @@ Required Gems:
 Deployment Steps
 
 1. Clone this project to the deployment machine
-2. To protect your feed info, edit the `@@salt` in `lib/feed.rb` to be something
-   unique.
+2. Copy `config/config.yml.example` to `config/config.yml` and edit it to your
+   liking.  Make sure the value for `salt` is unique!
 3. Create the `.htpaswd` file
 
     $ htpasswd -c data/.htpasswd <username>

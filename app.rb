@@ -3,6 +3,12 @@ require 'sinatra'
 require 'lib/feed'
 require 'lib/authorization'
 require 'nokogiri'
+require 'yaml'
+
+configure do
+  ENTANGLE_CONFIG = YAML.load_file('config/config.yml')
+  Feed.set_salt(ENTANGLE_CONFIG['salt']) if ENTANGLE_CONFIG['salt']
+end
 
 helpers do
   def repub_url(feed)
@@ -14,7 +20,12 @@ helpers do
   end
 
   def req_base
-    "#{request.scheme}://#{request.host}#{request.port == 80 ? '' : ':' + request.port.to_s}"
+    @base_url ||= ENTANGLE_CONFIG['base_url']
+    if (@base_url.nil? || @base_url == 'auto')
+      "#{request.scheme}://#{request.host}#{request.port == 80 ? '' : ':' + request.port.to_s}"
+    else
+      @base_url
+    end
   end
 
   def button(text, url, method = :get, _method = nil)

@@ -7,8 +7,12 @@ require 'net/https'
 class Feed
   @@feeds_path = 'data'
   @@cache_path = 'cache'
-  @@salt = '0Mg 1t\'5 p0pcrn! Fuck Yeah!'
+  @@salt = 'pr3tz3l2_4Nd-Hum/\/\|_|5'
   @@expire_time = 30 # minutes
+
+  def self.set_salt(salt)
+    @@salt = salt
+  end
 
   attr_accessor :url
   attr_accessor :username
