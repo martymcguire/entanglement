@@ -1,3 +1,8 @@
+* Fix feed edit form Type dropdown
+* Delete cached XML whenever feed is updated.
+* Trac-style auth doesn't work for TracForge protected sites.  Need to login
+  against the master Trac's /login.
+
 * Refactor Feed internals so that IDs are top level
 * Allow for hashing methods other than SHA1
 * Allow for other kinds of auth
@@ -14,3 +19,4 @@
 * Config file
   * Auth methods
   * Etc.
+
