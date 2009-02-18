@@ -118,6 +118,8 @@ class Feed
     http = Net::HTTP.new(uri.host, uri.port)
     uri = URI.parse(login_url)
     http.use_ssl = true if uri.scheme == "https"
+    # allow self-signed certs, etc.
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     req = Net::HTTP::Get.new(uri.path)
     req.basic_auth @username, @password
     req['Cookie'] = cookie
