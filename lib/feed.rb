@@ -4,6 +4,10 @@ require 'ftools'
 require 'uri'
 require 'open-uri'
 require 'nokogiri'
+require 'openssl'
+
+# Don't check SSL certs. This method is EW BAD.
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 class Feed
   @@feeds_path = 'data'
@@ -117,9 +121,9 @@ class Feed
     # Will still throw a 403...
     http = Net::HTTP.new(uri.host, uri.port)
     uri = URI.parse(login_url)
-    http.use_ssl = true if uri.scheme == "https"
-    # allow self-signed certs, etc.
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    if uri.scheme == "https"
+      http.use_ssl = true 
+    end
     req = Net::HTTP::Get.new(uri.path)
     req.basic_auth @username, @password
     req['Cookie'] = cookie
@@ -129,6 +133,9 @@ class Feed
     # Finally fetch the feed, passing both the cookie and auth back
     http = Net::HTTP.new(uri.host, uri.port)
     uri = URI.parse(@url)
+    if uri.scheme == "https"
+      http.use_ssl = true 
+    end
     req = Net::HTTP::Get.new(uri.path + '?' + uri.query)
     req.basic_auth(@username, @password)
     req['Cookie'] = cookie
